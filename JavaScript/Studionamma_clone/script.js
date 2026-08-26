@@ -34,10 +34,21 @@ letstalk.addEventListener("mouseleave" , () => {
     letstalk.textContent = "LET'S TALK";
 });
 
-mode.addEventListener("click" , (e) => {
-    const isDark = document.body.classList.toggle("dark");
-    e.target.textContent === "DARK MODE" ? (e.target.textContent = "LIGHT MODE") : (e.target.textContent = "DARK MODE");
-    
+let letsTalkPage = document.querySelector(".lets-talk-page");
+
+let isContactOverlayOpen = false;
+
+letstalk.addEventListener("click", () => {
+
+    isContactOverlayOpen = !isContactOverlayOpen;
+
+    if (isContactOverlayOpen) {
+        letsTalkPage.style.top = "0";
+        floatingVideo.style.opacity = '0';
+    } else {
+        letsTalkPage.style.top = "-120%";
+    }
+
 });
 
 let isOpen = false;
@@ -49,13 +60,37 @@ menu.addEventListener("click" , () => {
     if(isOpen){
         menu.textContent = "CLOSE";
         overlay.style.top = "0";
+        floatingVideo.style.display="none";
     }else{
         menu.textContent = "MENU";
         overlay.style.top = "-100%";
+        floatingVideo.style.display="block";  
     }
 });
 
 console.log(floatingVideo);
+
+let menuItems = document.querySelectorAll(".menu-item");
+
+menuItems.forEach((item) => {
+
+    let img = item.querySelector("img");
+    let text = item.querySelector("h1");
+
+    item.addEventListener("mouseenter", () => {
+        img.style.opacity = "1";
+        img.style.transform = "translateX(0)";
+        text.style.transform = "translateX(150px)";
+        img.style.paddingRight = "1rem";
+    });
+
+    item.addEventListener("mouseleave", () => {
+        img.style.opacity = "0";
+        img.style.transform = "translateX(-50px)";
+        text.style.transform = "translateX(0)";
+    });
+
+});
 
 
 
