@@ -44,9 +44,10 @@ letstalk.addEventListener("click", () => {
 
     if (isContactOverlayOpen) {
         letsTalkPage.style.top = "0";
-        floatingVideo.style.opacity = '0';
+        floatingVideo.style.display = 'none';
     } else {
         letsTalkPage.style.top = "-120%";
+        floatingVideo.style.display = 'block';
     }
 
 });
@@ -92,6 +93,58 @@ menuItems.forEach((item) => {
 
 });
 
+
+const scrollVideo = document.getElementById("scrollVideo");
+
+const observer = new IntersectionObserver(
+    (entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                scrollVideo.classList.add("show");
+                scrollVideo.play();
+            } else {
+                scrollVideo.pause();
+            }
+        });
+    },
+    {
+        threshold: 0.4
+    }
+);
+
+observer.observe(scrollVideo);
+
+const highlights = document.querySelectorAll(".highlight");
+
+highlights.forEach((highlight) => {
+
+  const images = highlight.querySelectorAll(".image-highlight");
+
+  highlight.addEventListener("mouseenter", () => {
+
+    images.forEach((image, index) => {
+
+      image.style.opacity = "1";
+
+      image.style.left = `${(index - 2) * 100}px`;
+      image.style.top = `${(index % 2) * 80 - 150}px`;
+
+      image.style.transform =
+        `rotate(${(index - 2) * 5}deg) scale(1)`;
+    });
+
+  });
+
+  highlight.addEventListener("mouseleave", () => {
+
+    images.forEach((image) => {
+      image.style.opacity = "0";
+      image.style.transform = "scale(0.7)";
+    });
+
+  });
+
+});
 
 
 
